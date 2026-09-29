@@ -1,0 +1,1456 @@
+[
+  {
+    "name": "Warehouse Rumble",
+    "style": "RUMBLE",
+    "chain": [
+      {
+        "module": "resonator",
+        "on": true,
+        "mix": 0.55,
+        "params": {
+          "mode": "RUMBLE",
+          "root": "F",
+          "color": 0.3,
+          "decay": 0.72,
+          "shift": 0.5,
+          "drive": 0.45,
+          "density": 0.7,
+          "duck": 0.72
+        }
+      },
+      {
+        "module": "filter",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "type": "LOW 24",
+          "cutoff": 0.45,
+          "reso": 0.3,
+          "drive": 0.25,
+          "env": 0.62,
+          "envdecay": 0.45,
+          "spread": 0.0,
+          "lowkeep": 0.0
+        }
+      },
+      {
+        "module": "drive",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "mode": "TAPE",
+          "drive": 0.3,
+          "tone": 0.4,
+          "bits": 0.0,
+          "rate": 0.0,
+          "bias": 0.0,
+          "lowkeep": 0.55,
+          "trim": 0.667
+        }
+      },
+      {
+        "module": "space",
+        "on": true,
+        "mix": 0.22,
+        "params": {
+          "size": 0.8,
+          "decay": 0.6,
+          "damp": 0.2,
+          "predelay": 0.3,
+          "mod": 0.3,
+          "lowcut": 0.6,
+          "duck": 0.45,
+          "width": 0.9
+        }
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "2.cutoff",
+        "shape": "curve",
+        "rate": "1/16",
+        "steps": 16,
+        "depth": 0.28,
+        "points": [
+          0.1,
+          0.3,
+          0.6,
+          0.3,
+          0.1,
+          0.4,
+          0.9,
+          0.4,
+          0.1,
+          0.3,
+          0.6,
+          0.3,
+          0.1,
+          0.4,
+          0.9,
+          0.4
+        ]
+      },
+      {
+        "target": "1.decay",
+        "shape": "sine",
+        "rate": "4 BARS",
+        "steps": 16,
+        "depth": 0.15,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.65,
+      "space": 0.5,
+      "chaos": 0.1,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Sub Pressure",
+    "style": "RUMBLE",
+    "chain": [
+      {
+        "module": "resonator",
+        "on": true,
+        "mix": 0.5,
+        "params": {
+          "mode": "RUMBLE",
+          "root": "F",
+          "color": 0.2,
+          "decay": 0.82,
+          "shift": 0.49,
+          "drive": 0.6,
+          "density": 0.8,
+          "duck": 0.82
+        }
+      },
+      {
+        "module": "filter",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "type": "LOW 24",
+          "cutoff": 0.36,
+          "reso": 0.2,
+          "drive": 0.2,
+          "env": 0.56,
+          "envdecay": 0.4,
+          "spread": 0.0,
+          "lowkeep": 0.0
+        }
+      },
+      {
+        "module": "space",
+        "on": true,
+        "mix": 0.15,
+        "params": {
+          "size": 0.7,
+          "decay": 0.5,
+          "damp": 0.1,
+          "predelay": 0.3,
+          "mod": 0.3,
+          "lowcut": 0.62,
+          "duck": 0.6,
+          "width": 0.9
+        }
+      },
+      {
+        "module": "off"
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "1.color",
+        "shape": "random",
+        "rate": "1/8",
+        "steps": 16,
+        "depth": 0.12,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "target": "2.cutoff",
+        "shape": "sine",
+        "rate": "2 BARS",
+        "steps": 16,
+        "depth": 0.18,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.75,
+      "space": 0.45,
+      "chaos": 0.05,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Iron Grid",
+    "style": "FERRO",
+    "chain": [
+      {
+        "module": "resonator",
+        "on": true,
+        "mix": 0.5,
+        "params": {
+          "mode": "METAL",
+          "root": "F",
+          "color": 0.65,
+          "decay": 0.45,
+          "shift": 0.53,
+          "drive": 0.4,
+          "density": 0.65,
+          "duck": 0.6
+        }
+      },
+      {
+        "module": "drive",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "mode": "FOLD",
+          "drive": 0.45,
+          "tone": 0.55,
+          "bits": 0.25,
+          "rate": 0.0,
+          "bias": 0.0,
+          "lowkeep": 0.5,
+          "trim": 0.667
+        }
+      },
+      {
+        "module": "gate",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "pattern": "EUCLID 7",
+          "rate": "1/16",
+          "depth": 0.7,
+          "shape": 0.25,
+          "stutter": 0.12,
+          "slice": "1/16",
+          "swing": 0.0
+        }
+      },
+      {
+        "module": "delay",
+        "on": true,
+        "mix": 0.25,
+        "params": {
+          "time": "1/16D",
+          "feedback": 0.45,
+          "tone": 0.55,
+          "lowcut": 0.6,
+          "wobble": 0.15,
+          "pingpong": 0.9,
+          "drive": 0.3,
+          "diffuse": 0.2
+        }
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "1.color",
+        "shape": "step",
+        "rate": "1/16",
+        "steps": 16,
+        "depth": 0.3,
+        "points": [
+          1.0,
+          0.2,
+          0.5,
+          0.2,
+          0.8,
+          0.1,
+          0.6,
+          0.3,
+          1.0,
+          0.2,
+          0.5,
+          0.2,
+          0.8,
+          0.1,
+          0.6,
+          0.3
+        ]
+      },
+      {
+        "target": "2.drive",
+        "shape": "curve",
+        "rate": "1/4",
+        "steps": 16,
+        "depth": 0.2,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.45,
+      "space": 0.45,
+      "chaos": 0.25,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Broken Bells",
+    "style": "FERRO",
+    "chain": [
+      {
+        "module": "resonator",
+        "on": true,
+        "mix": 0.6,
+        "params": {
+          "mode": "METAL",
+          "root": "G",
+          "color": 0.75,
+          "decay": 0.6,
+          "shift": 0.58,
+          "drive": 0.25,
+          "density": 0.5,
+          "duck": 0.5
+        }
+      },
+      {
+        "module": "shifter",
+        "on": true,
+        "mix": 0.3,
+        "params": {
+          "shift": 0.53,
+          "feedback": 0.35,
+          "delay": 0.3,
+          "spread": 0.6,
+          "tone": 0.75,
+          "lowcut": 0.25
+        }
+      },
+      {
+        "module": "space",
+        "on": true,
+        "mix": 0.3,
+        "params": {
+          "size": 0.75,
+          "decay": 0.62,
+          "damp": 0.5,
+          "predelay": 0.3,
+          "mod": 0.5,
+          "lowcut": 0.6,
+          "duck": 0.3,
+          "width": 0.9
+        }
+      },
+      {
+        "module": "off"
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "1.shift",
+        "shape": "triangle",
+        "rate": "2 BARS",
+        "steps": 16,
+        "depth": 0.1,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "target": "2.feedback",
+        "shape": "sine",
+        "rate": "1 BAR",
+        "steps": 16,
+        "depth": 0.2,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.4,
+      "space": 0.6,
+      "chaos": 0.2,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Sodium Siren",
+    "style": "SIRENE",
+    "chain": [
+      {
+        "module": "resonator",
+        "on": true,
+        "mix": 0.45,
+        "params": {
+          "mode": "TUBE",
+          "root": "F",
+          "color": 0.55,
+          "decay": 0.8,
+          "shift": 0.78,
+          "drive": 0.35,
+          "density": 0.5,
+          "duck": 0.7
+        }
+      },
+      {
+        "module": "shifter",
+        "on": true,
+        "mix": 0.45,
+        "params": {
+          "shift": 0.62,
+          "feedback": 0.65,
+          "delay": 0.45,
+          "spread": 0.75,
+          "tone": 0.65,
+          "lowcut": 0.25
+        }
+      },
+      {
+        "module": "delay",
+        "on": true,
+        "mix": 0.3,
+        "params": {
+          "time": "1/4D",
+          "feedback": 0.6,
+          "tone": 0.45,
+          "lowcut": 0.45,
+          "wobble": 0.25,
+          "pingpong": 0.7,
+          "drive": 0.3,
+          "diffuse": 0.2
+        }
+      },
+      {
+        "module": "space",
+        "on": true,
+        "mix": 0.22,
+        "params": {
+          "size": 0.85,
+          "decay": 0.65,
+          "damp": 0.5,
+          "predelay": 0.3,
+          "mod": 0.45,
+          "lowcut": 0.55,
+          "duck": 0.3,
+          "width": 0.9
+        }
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "2.shift",
+        "shape": "ramp up",
+        "rate": "4 BARS",
+        "steps": 16,
+        "depth": 0.18,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "target": "3.tone",
+        "shape": "sine",
+        "rate": "2 BARS",
+        "steps": 16,
+        "depth": 0.25,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.5,
+      "space": 0.65,
+      "chaos": 0.2,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Tunnel Warning",
+    "style": "SIRENE",
+    "chain": [
+      {
+        "module": "filter",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "type": "BAND",
+          "cutoff": 0.55,
+          "reso": 0.55,
+          "drive": 0.2,
+          "env": 0.5,
+          "envdecay": 0.4,
+          "spread": 0.0,
+          "lowkeep": 0.6
+        }
+      },
+      {
+        "module": "shifter",
+        "on": true,
+        "mix": 0.55,
+        "params": {
+          "shift": 0.35,
+          "feedback": 0.72,
+          "delay": 0.55,
+          "spread": 0.9,
+          "tone": 0.6,
+          "lowcut": 0.25
+        }
+      },
+      {
+        "module": "space",
+        "on": true,
+        "mix": 0.25,
+        "params": {
+          "size": 0.9,
+          "decay": 0.7,
+          "damp": 0.3,
+          "predelay": 0.3,
+          "mod": 0.3,
+          "lowcut": 0.55,
+          "duck": 0.3,
+          "width": 0.9
+        }
+      },
+      {
+        "module": "off"
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "1.cutoff",
+        "shape": "triangle",
+        "rate": "1 BAR",
+        "steps": 16,
+        "depth": 0.3,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "target": "2.shift",
+        "shape": "ramp down",
+        "rate": "2 BARS",
+        "steps": 16,
+        "depth": 0.12,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.55,
+      "space": 0.6,
+      "chaos": 0.15,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Dub Ghost",
+    "style": "DUB",
+    "chain": [
+      {
+        "module": "filter",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "type": "BAND",
+          "cutoff": 0.6,
+          "reso": 0.35,
+          "drive": 0.2,
+          "env": 0.55,
+          "envdecay": 0.4,
+          "spread": 0.0,
+          "lowkeep": 0.6
+        }
+      },
+      {
+        "module": "resonator",
+        "on": true,
+        "mix": 0.3,
+        "params": {
+          "mode": "TONAL",
+          "root": "F",
+          "color": 0.4,
+          "decay": 0.6,
+          "shift": 0.5,
+          "drive": 0.35,
+          "density": 0.45,
+          "duck": 0.6
+        }
+      },
+      {
+        "module": "delay",
+        "on": true,
+        "mix": 0.42,
+        "params": {
+          "time": "1/8D",
+          "feedback": 0.7,
+          "tone": 0.35,
+          "lowcut": 0.55,
+          "wobble": 0.35,
+          "pingpong": 0.9,
+          "drive": 0.4,
+          "diffuse": 0.3
+        }
+      },
+      {
+        "module": "space",
+        "on": true,
+        "mix": 0.25,
+        "params": {
+          "size": 0.85,
+          "decay": 0.68,
+          "damp": 0.25,
+          "predelay": 0.3,
+          "mod": 0.3,
+          "lowcut": 0.55,
+          "duck": 0.35,
+          "width": 0.9
+        }
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "3.feedback",
+        "shape": "curve",
+        "rate": "1/4",
+        "steps": 16,
+        "depth": 0.15,
+        "points": [
+          0.1,
+          0.2,
+          0.9,
+          0.3,
+          0.1,
+          0.2,
+          0.9,
+          0.3,
+          0.1,
+          0.2,
+          0.9,
+          0.3,
+          0.1,
+          0.2,
+          0.9,
+          0.3
+        ]
+      },
+      {
+        "target": "1.cutoff",
+        "shape": "sine",
+        "rate": "2 BARS",
+        "steps": 16,
+        "depth": 0.22,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.6,
+      "space": 0.65,
+      "chaos": 0.1,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Basement Chord",
+    "style": "DUB",
+    "chain": [
+      {
+        "module": "resonator",
+        "on": true,
+        "mix": 0.45,
+        "params": {
+          "mode": "TONAL",
+          "root": "D",
+          "color": 0.45,
+          "decay": 0.55,
+          "shift": 0.5,
+          "drive": 0.35,
+          "density": 0.55,
+          "duck": 0.55
+        }
+      },
+      {
+        "module": "filter",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "type": "LOW 12",
+          "cutoff": 0.5,
+          "reso": 0.25,
+          "drive": 0.2,
+          "env": 0.6,
+          "envdecay": 0.5,
+          "spread": 0.0,
+          "lowkeep": 0.0
+        }
+      },
+      {
+        "module": "delay",
+        "on": true,
+        "mix": 0.38,
+        "params": {
+          "time": "1/4T",
+          "feedback": 0.62,
+          "tone": 0.4,
+          "lowcut": 0.45,
+          "wobble": 0.2,
+          "pingpong": 1.0,
+          "drive": 0.3,
+          "diffuse": 0.2
+        }
+      },
+      {
+        "module": "space",
+        "on": true,
+        "mix": 0.2,
+        "params": {
+          "size": 0.7,
+          "decay": 0.55,
+          "damp": 0.5,
+          "predelay": 0.3,
+          "mod": 0.3,
+          "lowcut": 0.55,
+          "duck": 0.3,
+          "width": 0.9
+        }
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "2.cutoff",
+        "shape": "curve",
+        "rate": "1/8",
+        "steps": 16,
+        "depth": 0.25,
+        "points": [
+          0.2,
+          0.5,
+          0.9,
+          0.5,
+          0.2,
+          0.7,
+          0.3,
+          0.6,
+          0.2,
+          0.5,
+          0.9,
+          0.5,
+          0.2,
+          0.7,
+          0.3,
+          0.6
+        ]
+      },
+      {
+        "target": "3.mix",
+        "shape": "sine",
+        "rate": "4 BARS",
+        "steps": 16,
+        "depth": 0.15,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.55,
+      "space": 0.55,
+      "chaos": 0.1,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Concrete Engine",
+    "style": "INDUSTRIAL",
+    "chain": [
+      {
+        "module": "drive",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "mode": "CLIP",
+          "drive": 0.62,
+          "tone": 0.5,
+          "bits": 0.3,
+          "rate": 0.15,
+          "bias": 0.0,
+          "lowkeep": 0.5,
+          "trim": 0.667
+        }
+      },
+      {
+        "module": "gate",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "pattern": "BROKEN",
+          "rate": "1/16",
+          "depth": 0.85,
+          "shape": 0.15,
+          "stutter": 0.22,
+          "slice": "1/16",
+          "swing": 0.0
+        }
+      },
+      {
+        "module": "filter",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "type": "HIGH",
+          "cutoff": 0.5,
+          "reso": 0.5,
+          "drive": 0.3,
+          "env": 0.5,
+          "envdecay": 0.4,
+          "spread": 0.0,
+          "lowkeep": 0.55
+        }
+      },
+      {
+        "module": "space",
+        "on": true,
+        "mix": 0.18,
+        "params": {
+          "size": 0.35,
+          "decay": 0.35,
+          "damp": 0.5,
+          "predelay": 0.3,
+          "mod": 0.3,
+          "lowcut": 0.55,
+          "duck": 0.4,
+          "width": 0.9
+        }
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "1.drive",
+        "shape": "step",
+        "rate": "1/16",
+        "steps": 16,
+        "depth": 0.25,
+        "points": [
+          1.0,
+          0.3,
+          0.6,
+          0.2,
+          1.0,
+          0.3,
+          0.6,
+          0.2,
+          1.0,
+          0.3,
+          0.6,
+          0.2,
+          1.0,
+          0.3,
+          0.6,
+          0.2
+        ]
+      },
+      {
+        "target": "3.cutoff",
+        "shape": "random",
+        "rate": "1/16",
+        "steps": 16,
+        "depth": 0.22,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.5,
+      "space": 0.4,
+      "chaos": 0.35,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Static Ritual",
+    "style": "INDUSTRIAL",
+    "chain": [
+      {
+        "module": "drive",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "mode": "RECT",
+          "drive": 0.55,
+          "tone": 0.45,
+          "bits": 0.0,
+          "rate": 0.0,
+          "bias": 0.3,
+          "lowkeep": 0.55,
+          "trim": 0.667
+        }
+      },
+      {
+        "module": "resonator",
+        "on": true,
+        "mix": 0.35,
+        "params": {
+          "mode": "METAL",
+          "root": "F#",
+          "color": 0.6,
+          "decay": 0.35,
+          "shift": 0.5,
+          "drive": 0.35,
+          "density": 0.6,
+          "duck": 0.6
+        }
+      },
+      {
+        "module": "gate",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "pattern": "EUCLID 5",
+          "rate": "1/16",
+          "depth": 0.65,
+          "shape": 0.3,
+          "stutter": 0.3,
+          "slice": "1/32",
+          "swing": 0.0
+        }
+      },
+      {
+        "module": "delay",
+        "on": true,
+        "mix": 0.2,
+        "params": {
+          "time": "1/8T",
+          "feedback": 0.4,
+          "tone": 0.5,
+          "lowcut": 0.45,
+          "wobble": 0.15,
+          "pingpong": 0.7,
+          "drive": 0.3,
+          "diffuse": 0.2
+        }
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "3.stutter",
+        "shape": "curve",
+        "rate": "1 BAR",
+        "steps": 16,
+        "depth": 0.2,
+        "points": [
+          0.0,
+          0.0,
+          0.3,
+          1.0,
+          0.0,
+          0.0,
+          0.3,
+          1.0,
+          0.0,
+          0.0,
+          0.3,
+          1.0,
+          0.0,
+          0.0,
+          0.3,
+          1.0
+        ]
+      },
+      {
+        "target": "1.tone",
+        "shape": "square",
+        "rate": "1/2",
+        "steps": 16,
+        "depth": 0.2,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.45,
+      "space": 0.4,
+      "chaos": 0.4,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Hypno Gate",
+    "style": "INDUSTRIAL",
+    "chain": [
+      {
+        "module": "gate",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "pattern": "3-3-2",
+          "rate": "1/16",
+          "depth": 0.9,
+          "shape": 0.45,
+          "stutter": 0.0,
+          "slice": "1/16",
+          "swing": 0.0
+        }
+      },
+      {
+        "module": "filter",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "type": "ACID",
+          "cutoff": 0.5,
+          "reso": 0.4,
+          "drive": 0.2,
+          "env": 0.5,
+          "envdecay": 0.4,
+          "spread": 0.0,
+          "lowkeep": 0.0
+        }
+      },
+      {
+        "module": "delay",
+        "on": true,
+        "mix": 0.3,
+        "params": {
+          "time": "1/16D",
+          "feedback": 0.55,
+          "tone": 0.45,
+          "lowcut": 0.45,
+          "wobble": 0.15,
+          "pingpong": 1.0,
+          "drive": 0.3,
+          "diffuse": 0.2
+        }
+      },
+      {
+        "module": "off"
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "2.cutoff",
+        "shape": "sine",
+        "rate": "4 BARS",
+        "steps": 16,
+        "depth": 0.35,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "target": "2.reso",
+        "shape": "triangle",
+        "rate": "2 BARS",
+        "steps": 16,
+        "depth": 0.2,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.5,
+      "space": 0.5,
+      "chaos": 0.1,
+      "amount": 1.0
+    }
+  },
+  {
+    "name": "Night Breath",
+    "style": "RUMBLE",
+    "chain": [
+      {
+        "module": "filter",
+        "on": true,
+        "mix": 1.0,
+        "params": {
+          "type": "LOW 12",
+          "cutoff": 0.55,
+          "reso": 0.2,
+          "drive": 0.2,
+          "env": 0.5,
+          "envdecay": 0.4,
+          "spread": 0.0,
+          "lowkeep": 0.5
+        }
+      },
+      {
+        "module": "resonator",
+        "on": true,
+        "mix": 0.4,
+        "params": {
+          "mode": "RUMBLE",
+          "root": "A",
+          "color": 0.35,
+          "decay": 0.65,
+          "shift": 0.5,
+          "drive": 0.35,
+          "density": 0.55,
+          "duck": 0.7
+        }
+      },
+      {
+        "module": "space",
+        "on": true,
+        "mix": 0.3,
+        "params": {
+          "size": 0.9,
+          "decay": 0.72,
+          "damp": 0.2,
+          "predelay": 0.3,
+          "mod": 0.3,
+          "lowcut": 0.55,
+          "duck": 0.55,
+          "width": 0.9
+        }
+      },
+      {
+        "module": "off"
+      },
+      {
+        "module": "off"
+      }
+    ],
+    "motion": [
+      {
+        "target": "1.cutoff",
+        "shape": "sine",
+        "rate": "1 BAR",
+        "steps": 16,
+        "depth": 0.3,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "target": "3.mix",
+        "shape": "sine",
+        "rate": "2 BARS",
+        "steps": 16,
+        "depth": 0.2,
+        "points": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "macros": {
+      "dark": 0.6,
+      "space": 0.6,
+      "chaos": 0.05,
+      "amount": 1.0
+    }
+  }
+]

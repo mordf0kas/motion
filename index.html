@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion · Drelva</title>
+<meta name="description" content="Motion: rack de efeitos para techno hipnótico e raw onde tudo se mexe, sincronizado com a DAW. DICE até gostar, volta atrás, cruza sons, ou descreve o som em texto.">
+<meta property="og:title" content="Motion · Drelva">
+<meta property="og:description" content="Rack de efeitos para techno hipnótico onde tudo se mexe. DICE até gostar.">
+<meta property="og:image" content="img/motion-ui-0.png">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#"><img src="img/monogram.svg" alt="" width="26" height="33"><span>MOTION</span></a>
+  <nav>
+    <a href="#demo">Experimenta</a>
+    <a href="#ouvir">Ouvir</a>
+    <a href="#instalar">Instalar</a>
+    <a href="#guia">Guia</a>
+    <a href="#ia">IA</a>
+    <a class="btn small" href="#download">Download</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <p class="kicker">DRELVA · VST3 · v1.0</p>
+    <h1>Tudo se mexe.</h1>
+    <p class="lead">Motion é uma rack de efeitos para techno hipnótico, raw e industrial. Cinco slots, sete módulos, seis motion lanes sincronizadas com a DAW. Chegas a um som bom em segundos: <b>DICE</b> até gostar, volta atrás, cruza dois sons, ou descreve o som em texto.</p>
+    <div class="cta">
+      <a class="btn" href="#demo">Experimentar no browser</a>
+      <a class="btn ghost" href="#download">Download para Windows</a>
+    </div>
+    <p class="note">Soa bem sem IA. A IA só acelera a descoberta.</p>
+  </div>
+  <figure class="hero-shot"><img src="img/motion-ui-0.png" alt="Interface do Motion: cinco slots em série, knobs do módulo selecionado, macros, morph pad, motion lanes e análise do loop" width="1770" height="1140"></figure>
+</section>
+
+<!-- ============================================================== interactive demo -->
+<section id="demo" class="demo-wrap">
+  <div class="section-head">
+    <h2>Experimenta</h2>
+    <p>O motor do Motion a correr no teu browser, sobre um loop de techno (ou o teu ficheiro). Carrega em <b>LIGAR SOM</b>, depois <b>DICE</b>.</p>
+  </div>
+
+  <div id="app" class="app">
+    <div class="bar">
+      <button id="power" class="btn power">▶ LIGAR SOM</button>
+      <select id="preset" aria-label="Presets"></select>
+      <div class="hist">
+        <button id="back" class="icon" aria-label="Som anterior">◀</button>
+        <div class="now"><b id="name">—</b><small id="histpos">0 / 0</small></div>
+        <button id="fwd" class="icon" aria-label="Som seguinte">▶</button>
+      </div>
+      <select id="style" aria-label="Estilo do DICE"></select>
+      <button id="dice" class="dice"><span class="die"></span>DICE</button>
+      <button id="like" class="icon" title="Gosto: o DICE aprende">▲</button>
+      <button id="dislike" class="icon" title="Não gosto">▼</button>
+      <button id="breedBtn" class="btn ghost small">BREED</button>
+    </div>
+    <div id="breed" class="breed" hidden>
+      <span>Filhos do som atual com o anterior:</span>
+      <div id="kids"></div>
+      <button id="breedAgain" class="btn ghost small">NOVA NINHADA</button>
+    </div>
+
+    <div id="chain" class="chain"></div>
+
+    <div class="grid">
+      <div class="panel editor">
+        <div class="ph"><h3 id="slotTitle">SLOT 1</h3><p id="slotBlurb"></p></div>
+        <div id="params" class="params"></div>
+        <p class="hint">cadeado em cada knob: o DICE não lhe mexe · duplo clique: valor por defeito · → lane: move-o com uma lane</p>
+      </div>
+      <div class="panel macros">
+        <div class="ph"><h3>MACROS</h3><button id="macroLock" class="lock" aria-label="Cadeado nas macros"></button></div>
+        <div id="macroKnobs" class="knobs4"></div>
+        <div class="ph small"><h3>MORPH</h3><p>clica num canto vazio para guardar, arrasta para misturar</p></div>
+        <canvas id="morph" class="morph" width="560" height="300"></canvas>
+        <div class="morph-bar"><button id="morphOn" class="btn ghost small">MORPH OFF</button><button id="morphClear" class="btn ghost small">LIMPAR A–D</button></div>
+      </div>
+      <div class="panel lanes">
+        <div class="ph"><h3>MOTION LANES</h3><div id="laneTabs" class="tabs"></div><button id="laneLock" class="lock" aria-label="Cadeado na lane"></button></div>
+        <div class="lane-body">
+          <div class="lane-controls">
+            <select id="laneTarget" aria-label="Destino"></select>
+            <div class="row"><select id="laneShape" aria-label="Forma"></select><select id="laneRate" aria-label="Divisão"></select></div>
+            <label class="range">STEPS <input id="laneSteps" type="range" min="1" max="16" step="1"><output id="laneStepsOut">16</output></label>
+            <div id="laneDepth"></div>
+            <button id="laneRandom" class="btn ghost small">CURVA ALEATÓRIA</button>
+          </div>
+          <canvas id="lane" class="lane" width="900" height="260"></canvas>
+        </div>
+      </div>
+      <div class="panel out">
+        <div class="ph"><h3>SAÍDA</h3></div>
+        <canvas id="spectrum" class="spectrum" width="560" height="170"></canvas>
+        <div class="out-row">
+          <label class="range">BPM <input id="bpm" type="range" min="100" max="150" step="1" value="128"><output id="bpmOut">128</output></label>
+          <div id="beats" class="beats"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="out-row">
+          <label class="file btn ghost small">O TEU ÁUDIO <input id="file" type="file" accept="audio/*" hidden></label>
+          <button id="useLoop" class="btn ghost small">LOOP DE TECHNO</button>
+          <button id="bypass" class="btn ghost small">A/B (SECO)</button>
+        </div>
+        <p class="hint">O ficheiro fica no teu browser. Nada é enviado.</p>
+      </div>
+    </div>
+  </div>
+  <p class="demo-note">A demo é uma versão web do motor (sem oversampling, sem análise do loop e sem IA). O plugin corre a versão completa, testada com 2385 verificações.</p>
+</section>
+
+<!-- ============================================================== listen -->
+<section id="ouvir">
+  <div class="section-head">
+    <h2>Ouvir</h2>
+    <p>O mesmo loop seco (kick, hat, clap, baixo em F a 128 BPM) através dos presets de fábrica e de cinco rolls do DICE, renderizados pelo plugin real. O level match mantém tudo ao volume do seco (±0,5 dB), por isso comparas som e não volume.</p>
+  </div>
+  <div id="tracks" class="tracks"></div>
+  <figure class="specs">
+    <img src="img/spec-dry.png" alt="Espectrograma do loop seco" loading="lazy">
+    <img src="img/spec-rumble.png" alt="Espectrograma do mesmo loop com o preset Warehouse Rumble: um rumble a respirar entre os kicks" loading="lazy">
+    <figcaption>Seco (cima) e Warehouse Rumble (baixo): o rumble enche o grave entre os kicks e respira com eles.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================== install -->
+<section id="instalar" class="two">
+  <div>
+    <h2 id="download">Download</h2>
+    <p>Windows 10/11, 64-bit. VST3 para Ableton Live, Bitwig, Reaper, FL Studio, Cubase e outros; mais uma versão Standalone para experimentar sem DAW.</p>
+    <p><a class="btn" id="dl" href="https://github.com/mordf0kas/motion/releases/latest">Download Motion 1.0 (Windows)</a></p>
+    <p class="small-print">macOS (VST3 + AU): compila a partir do código (Xcode). O código de sistema do Keychain já está escrito mas ainda não foi testado num Mac.</p>
+  </div>
+  <div>
+    <h2>Instalar</h2>
+    <ol class="steps">
+      <li>Descarrega o <code>Motion-1.0-Windows.zip</code> e extrai.</li>
+      <li>Copia a pasta <code>Motion.vst3</code> para <code>C:\Program Files\Common Files\VST3\</code> (pede permissão de administrador).</li>
+      <li>Na DAW, volta a procurar plugins (no Ableton: Preferências ▸ Plug-Ins ▸ Rescan).</li>
+      <li>Põe o Motion num canal de drums, num loop ou no master de um grupo. Carrega em <b>DICE</b>.</li>
+    </ol>
+    <p class="small-print">O instalador ainda não está assinado: o Windows SmartScreen pode avisar ("Mais informações ▸ Executar mesmo assim"). A assinatura de código vem com a versão comercial.</p>
+  </div>
+</section>
+
+<!-- ============================================================== guide -->
+<section id="guia">
+  <div class="section-head">
+    <h2>Guia</h2>
+    <p>Três camadas: um núcleo que funciona offline, inteligência local sem LLM, e IA opcional por cima.</p>
+  </div>
+  <div class="cards">
+    <article><h3>DICE curado</h3><p>Sorteia módulos, valores e movimento dentro de receitas do nicho: <b>RUMBLE</b>, <b>FERRO</b>, <b>SIRENE</b>, <b>DUB</b>, <b>INDUSTRIAL</b> (ou ANY). Nunca é random cego: cada range foi escolhido de ouvido e o sub e o kick ficam protegidos. Atalho: <kbd>D</kbd>.</p></article>
+    <article><h3>Histórico ◀ ▶</h3><p>Cada DICE, preset ou pedido à IA fica no histórico. Volta atrás e em frente com as setas (<kbd>←</kbd> <kbd>→</kbd>). As edições que fizeres a um som ficam guardadas quando sais dele.</p></article>
+    <article><h3>Cadeados</h3><p>Fixa um slot inteiro, um só parâmetro (botão direito no knob), uma lane ou as macros. O DICE, o BREED e a IA sorteiam só o resto.</p></article>
+    <article><h3>Gosto que aprende</h3><p>▲ / ▼ treinam um pequeno modelo local (regressão logística sobre a receita) que puxa o DICE para o que gostas, sem deixar de explorar. Fica no teu computador.</p></article>
+    <article><h3>Motion lanes</h3><p>Seis sequenciadores de curvas sincronizados com a DAW: CURVE, STEP, LFOs e ENVELOPE. Desenha a curva com o rato, escolhe o destino (qualquer knob, o MIX de um slot ou o AMOUNT), a divisão e a profundidade. O ponto lime no knob mostra onde a lane o está a levar.</p></article>
+    <article><h3>Macros</h3><p><b>DARK</b> escurece tudo o que é brilho e empurra o drive. <b>SPACE</b> abre reverbs, delays e larguras. <b>CHAOS</b> dá deriva aleatória aos parâmetros de caos e aprofunda as lanes. <b>AMOUNT</b> é o dry/wet global.</p></article>
+    <article><h3>Morph</h3><p>Guarda quatro sons nos cantos A–D e arrasta no pad para passar entre eles. Os parâmetros do mesmo módulo misturam-se; os módulos trocam a meio, com crossfade. Ao desligar, o som fica onde o pad estava.</p></article>
+    <article><h3>Breed</h3><p>Cruza o som atual com o anterior (ou com um snapshot) e dá quatro filhos: módulos de um ou de outro pai, valores misturados, uma pequena mutação.</p></article>
+    <article><h3>Análise do loop</h3><p>Com o plugin aberto, o Motion ouve o teu loop: tom, BPM, densidade de transientes e buracos no espectro. As sugestões são botões: "o teu loop está vazio entre 60 e 150 Hz, queres um rumble?" ▸ DICE RUMBLE, já no tom certo.</p></article>
+  </div>
+
+  <h3 class="sub">Módulos</h3>
+  <table class="mods">
+    <thead><tr><th>Módulo</th><th>O que faz</th><th>Parâmetros</th></tr></thead>
+    <tbody id="modTable"></tbody>
+  </table>
+</section>
+
+<!-- ============================================================== AI -->
+<section id="ia" class="two">
+  <div>
+    <h2>Descreve o som</h2>
+    <p>Escreve <i>"rumble de armazém escuro que respira com o kick"</i> e o Motion monta a cadeia, os valores e o movimento. Continua a conversa: <i>"mais sujo"</i>, <i>"menos metálico"</i>, <i>"abre no compasso 4"</i>. A resposta é uma receita validada e limitada a ranges seguros antes de chegar ao áudio, com transições suaves. O som nunca pára enquanto a IA pensa.</p>
+    <p>Não há servidor da Drelva: usas a tua chave ou um modelo local. <b>Só saem o texto e os números da análise, nunca o áudio.</b> A chave fica no cofre do sistema (Windows Credential Manager / macOS Keychain), nunca no projeto da DAW.</p>
+  </div>
+  <div>
+    <table class="providers">
+      <thead><tr><th>Opção</th><th>Para quem</th><th>Nota</th></tr></thead>
+      <tbody>
+        <tr><td>Desligado</td><td>todos</td><td>DICE, histórico, breeding e análise funcionam na mesma</td></tr>
+        <tr><td>Ollama (local)</td><td>offline e privado</td><td>modelos de 3–8B; ~5 GB de RAM num 7–8B. <code>ollama pull qwen2.5:7b</code></td></tr>
+        <tr><td>Gemini</td><td>para começar</td><td>chave grátis no Google AI Studio; no plano grátis os dados podem ser usados pela Google</td></tr>
+        <tr><td>Claude</td><td>mais qualidade</td><td>Haiku 4.5 (o mais barato), Sonnet 5.5, Opus 5.5</td></tr>
+        <tr><td>OpenAI</td><td>quem já tem conta</td><td>a subscrição ChatGPT não inclui a API</td></tr>
+      </tbody>
+    </table>
+    <ol class="steps">
+      <li>No plugin, carrega em <b>IA</b> e depois na roda dentada.</li>
+      <li>Escolhe o fornecedor e o modelo, cola a chave, carrega em <b>GUARDAR E TESTAR</b>.</li>
+      <li>Escreve o som e carrega em Enter. O contador de uso fica no teu computador.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="notas" class="two">
+  <div>
+    <h2>Pormenores</h2>
+    <ul class="plain">
+      <li>Sincronizado com a DAW (posição e tempo); parado, continua a mexer ao tempo da DAW.</li>
+      <li><b>Level match</b> mantém a saída ao volume da entrada, para que o DICE não te engane com volume.</li>
+      <li>Trocar de módulo nunca dá clique: o slot faz crossfade de 12 ms.</li>
+      <li>Saída protegida: transparente até −1 dBFS, soft clip acima.</li>
+      <li>Todos os parâmetros automatizáveis; o estado completo (lanes, cadeados, snapshots, histórico) fica no projeto.</li>
+      <li>Presets teus: <b>GUARDAR</b> escreve JSON em <code>Documentos\Drelva\Motion\Presets</code>.</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Problemas comuns</h2>
+    <ul class="plain">
+      <li><b>O Resonator não soa:</b> precisa de transientes (kicks, percussão). Num pad contínuo usa DUB ou SIRENE.</li>
+      <li><b>"Sem ligação ao Ollama":</b> abre o Ollama e instala o modelo (<code>ollama pull …</code>). O primeiro pedido carrega o modelo e pode demorar.</li>
+      <li><b>"Chave recusada":</b> confirma a chave e o nome do modelo nas definições da IA.</li>
+      <li><b>macOS e a sandbox da DAW:</b> algumas DAWs bloqueiam ligações; a IA falha com uma mensagem clara e o resto funciona.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <img src="img/lettering.svg" alt="DRELVA" height="12">
+  <p>Motion 1.0 · feito para techno hipnótico · o motor do Resonator vem do ResoShift</p>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
