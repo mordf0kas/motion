@@ -29,7 +29,7 @@
 
 <section class="hero">
   <div class="hero-text">
-    <p class="kicker">DRELVA · VST3 · v1.0</p>
+    <p class="kicker">DRELVA · VST3 · v1.0.1</p>
     <h1>Tudo se mexe.</h1>
     <p class="lead">Motion é uma rack de efeitos para techno hipnótico, raw e industrial. Cinco slots, sete módulos, seis motion lanes sincronizadas com a DAW. Chegas a um som bom em segundos: <b>DICE</b> até gostar, volta atrás, cruza dois sons, ou descreve o som em texto.</p>
     <div class="cta">
@@ -113,7 +113,7 @@
       </div>
     </div>
   </div>
-  <p class="demo-note">A demo é uma versão web do motor (sem oversampling, sem análise do loop e sem IA). O plugin corre a versão completa, testada com 2385 verificações.</p>
+  <p class="demo-note">A demo é uma versão web do motor (sem oversampling, sem análise do loop e sem IA). O plugin corre a versão completa, testada com 2388 verificações.</p>
 </section>
 
 <!-- ============================================================== listen -->
@@ -135,13 +135,13 @@
   <div>
     <h2 id="download">Download</h2>
     <p>Windows 10/11, 64-bit. VST3 para Ableton Live, Bitwig, Reaper, FL Studio, Cubase e outros; mais uma versão Standalone para experimentar sem DAW.</p>
-    <p><a class="btn" id="dl" href="https://github.com/mordf0kas/motion/releases/latest">Download Motion 1.0 (Windows)</a></p>
+    <p><a class="btn" id="dl" href="https://github.com/mordf0kas/motion/releases/latest">Download Motion 1.0.1 (Windows)</a></p>
     <p class="small-print">macOS (VST3 + AU): compila a partir do código (Xcode). O código de sistema do Keychain já está escrito mas ainda não foi testado num Mac.</p>
   </div>
   <div>
     <h2>Instalar</h2>
     <ol class="steps">
-      <li>Descarrega o <code>Motion-1.0-Windows.zip</code> e extrai.</li>
+      <li>Descarrega o <code>Motion-1.0.1-Windows.zip</code> e extrai.</li>
       <li>Copia a pasta <code>Motion.vst3</code> para <code>C:\Program Files\Common Files\VST3\</code> (pede permissão de administrador).</li>
       <li>Na DAW, volta a procurar plugins (no Ableton: Preferências ▸ Plug-Ins ▸ Rescan).</li>
       <li>Põe o Motion num canal de drums, num loop ou no master de um grupo. Carrega em <b>DICE</b>.</li>
@@ -193,6 +193,7 @@
         <tr><td>OpenAI</td><td>quem já tem conta</td><td>a subscrição ChatGPT não inclui a API</td></tr>
       </tbody>
     </table>
+    <p class="small-print"><b>Benchmark</b> (40 pedidos, verificação de direção: "mais escuro" tem de sair mais escuro): Ollama com um modelo local de 9B deu <b>39/40 receitas válidas</b> e <b>75 %</b> das mudanças na direção pedida, ~22 s por pedido. <a href="https://github.com/mordf0kas/motion/blob/main/bench/ollama-qwythos-9b.md">Relatório</a>. Modelos na nuvem ainda por medir.</p>
     <ol class="steps">
       <li>No plugin, carrega em <b>IA</b> e depois na roda dentada.</li>
       <li>Escolhe o fornecedor e o modelo, cola a chave, carrega em <b>GUARDAR E TESTAR</b>.</li>
@@ -226,7 +227,7 @@
 
 <footer>
   <img src="img/lettering.svg" alt="DRELVA" height="12">
-  <p>Motion 1.0 · feito para techno hipnótico · o motor do Resonator vem do ResoShift</p>
+  <p>Motion 1.0.1 · feito para techno hipnótico · o motor do Resonator vem do ResoShift</p>
 </footer>
 
 <script type="module" src="app.js"></script>

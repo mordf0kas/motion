@@ -11,7 +11,7 @@ DICE até gostar, volta atrás, cruza dois sons, ou descreve o som em texto.
 
 ## Instalar
 
-1. Descarrega `Motion-1.0-Windows.zip` em [Releases](https://github.com/mordf0kas/motion/releases/latest) e extrai.
+1. Descarrega `Motion-1.0.1-Windows.zip` em [Releases](https://github.com/mordf0kas/motion/releases/latest) e extrai.
 2. Copia a pasta `Motion.vst3` para `C:\Program Files\Common Files\VST3\`.
 3. Na DAW, volta a procurar plugins. Põe o Motion num canal de drums ou num loop e carrega em **DICE**.
 
