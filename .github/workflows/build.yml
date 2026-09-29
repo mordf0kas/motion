@@ -1,0 +1,166 @@
+# Builds Motion from the PRIVATE source repo (mordf0kas/drelva-motion) and publishes the installers
+# in this repo's releases. Runs here because Actions minutes are free for public repos; the source is
+# fetched with a read-only deploy key (secret MOTION_SRC_KEY) and never stored here. Only the
+# installers end up public. The GitHub Pages site in this repo is untouched by this workflow.
+# Run it by hand: Actions -> build -> Run workflow.
+name: build
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branch / tag / commit of mordf0kas/drelva-motion to build"
+        default: main
+      version:
+        description: "Release version, e.g. 1.0.1 (empty = the version in CMakeLists.txt)"
+        default: ""
+      windows:
+        description: "Also build the Windows installer + zip"
+        type: boolean
+        default: true
+      publish:
+        description: "Upload the installers to release v<version> here"
+        type: boolean
+        default: true
+permissions:
+  contents: write
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Skip Windows unless asked
+        id: gate
+        shell: bash
+        run: |
+          if [ "${{ matrix.os }}" = "windows-latest" ] && [ "${{ inputs.windows }}" != "true" ]; then echo "run=false" >> "$GITHUB_OUTPUT"; else echo "run=true" >> "$GITHUB_OUTPUT"; fi
+      - name: Fetch the source (private repo, read-only deploy key)
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: mordf0kas/drelva-motion
+          ref: ${{ inputs.ref }}
+          ssh-key: ${{ secrets.MOTION_SRC_KEY }}
+          persist-credentials: false
+      - name: Fetch JUCE 8.0.4
+        if: steps.gate.outputs.run == 'true'
+        run: git clone --depth 1 --branch 8.0.4 https://github.com/juce-framework/JUCE.git JUCE
+      - name: Version
+        if: steps.gate.outputs.run == 'true'
+        id: ver
+        shell: bash
+        run: |
+          V="${{ inputs.version }}"
+          [ -n "$V" ] || V=$(sed -n 's/^project(Motion VERSION \([0-9.]*\).*/\1/p' CMakeLists.txt)
+          echo "v=$V" >> "$GITHUB_OUTPUT"
+      - name: Configure
+        if: steps.gate.outputs.run == 'true'
+        shell: bash
+        run: |
+          if [ "${{ matrix.os }}" = "macos-latest" ]; then
+            cmake -B build -DCMAKE_BUILD_TYPE=Release -DMOTION_BUILD_TOOLS=OFF -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+          else
+            cmake -B build -DMOTION_BUILD_TOOLS=OFF
+          fi
+      - name: Build VST3 + Standalone
+        if: steps.gate.outputs.run == 'true'
+        run: cmake --build build --config Release --target Motion_VST3 Motion_Standalone --parallel 4
+      - name: Build AU (macOS)
+        if: steps.gate.outputs.run == 'true' && matrix.os == 'macos-latest'
+        run: cmake --build build --config Release --target Motion_AU --parallel 4
+      - name: Package macOS installer (.pkg)
+        if: steps.gate.outputs.run == 'true' && matrix.os == 'macos-latest'
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.ver.outputs.v }}"
+          R="build/Motion_artefacts/Release"
+          # JUCE writes moduleinfo.json after the linker's ad-hoc signature: re-seal the final bundles
+          for b in "$R/VST3/Motion.vst3" "$R/AU/Motion.component" "$R/Standalone/Motion.app"; do
+            codesign --force --deep --sign - "$b"
+            codesign --verify --deep --strict -vv "$b"
+          done
+          mkdir -p "pkg_root/Applications" "pkg_root/Library/Audio/Plug-Ins/VST3" "pkg_root/Library/Audio/Plug-Ins/Components" pkg_scripts out
+          cp -R "$R/VST3/Motion.vst3" "pkg_root/Library/Audio/Plug-Ins/VST3/"
+          cp -R "$R/AU/Motion.component" "pkg_root/Library/Audio/Plug-Ins/Components/"
+          cp -R "$R/Standalone/Motion.app" "pkg_root/Applications/"
+          printf '#!/bin/bash\nfor p in "/Library/Audio/Plug-Ins/VST3/Motion.vst3" "/Library/Audio/Plug-Ins/Components/Motion.component" "/Applications/Motion.app"; do xattr -dr com.apple.quarantine "$p" 2>/dev/null || true; done\nkillall -9 AudioComponentRegistrar 2>/dev/null || true\nexit 0\n' > pkg_scripts/postinstall
+          chmod +x pkg_scripts/postinstall
+          # non-relocatable bundles, so Installer always writes to the system folders
+          pkgbuild --analyze --root pkg_root components.plist
+          i=0; while plutil -extract "$i" xml1 -o /dev/null components.plist 2>/dev/null; do plutil -replace "$i.BundleIsRelocatable" -bool NO components.plist; i=$((i+1)); done
+          pkgbuild --root pkg_root --component-plist components.plist --scripts pkg_scripts --identifier "com.drelva.motion.installer" --version "$VERSION" --install-location / component.pkg
+          productbuild --package component.pkg "out/Motion-$VERSION-Installer-macOS.pkg"
+          echo "$VERSION" > out/VERSION
+          ls -la out
+      - name: Package Windows installer + zip
+        if: steps.gate.outputs.run == 'true' && matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          $v = "${{ steps.ver.outputs.v }}"
+          $iss = @"
+          #define V "$v"
+          [Setup]
+          AppId={{6D1B2E4C-8F3A-4C71-9E0D-DRELVAMOTION1}}
+          AppName=Motion
+          AppVersion={#V}
+          AppPublisher=Drelva
+          AppPublisherURL=https://mordf0kas.github.io/motion
+          DefaultDirName={autopf}\Drelva\Motion
+          DisableProgramGroupPage=yes
+          OutputDir=installer_out
+          OutputBaseFilename=Motion-Setup
+          Compression=lzma2
+          SolidCompression=yes
+          WizardStyle=modern
+          ArchitecturesInstallIn64BitMode=x64compatible
+          PrivilegesRequired=admin
+          [Components]
+          Name: "vst3"; Description: "VST3 plug-in"; Types: full compact custom; Flags: fixed
+          Name: "standalone"; Description: "Standalone app"; Types: full
+          [Files]
+          Source: "build\Motion_artefacts\Release\VST3\Motion.vst3\*"; DestDir: "{commoncf}\VST3\Motion.vst3"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: vst3
+          Source: "build\Motion_artefacts\Release\Standalone\Motion.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: standalone
+          [Icons]
+          Name: "{autoprograms}\Motion"; Filename: "{app}\Motion.exe"; Components: standalone
+          [UninstallDelete]
+          Type: filesandordirs; Name: "{commoncf}\VST3\Motion.vst3"
+          "@
+          Set-Content -Path Motion.iss -Value ($iss -replace '(?m)^ {10}', '') -Encoding UTF8
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" Motion.iss
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          New-Item -ItemType Directory -Force out | Out-Null
+          Copy-Item installer_out\Motion-Setup.exe "out\Motion-$v-Setup-Windows.exe"
+          Compress-Archive -Path build\Motion_artefacts\Release\VST3\Motion.vst3, build\Motion_artefacts\Release\Standalone\Motion.exe -DestinationPath "out\Motion-$v-Windows.zip"
+          Set-Content -Path out\VERSION -Value $v -NoNewline
+      - uses: actions/upload-artifact@v4
+        if: steps.gate.outputs.run == 'true'
+        with:
+          name: Motion-${{ matrix.os }}
+          path: out
+
+  release:
+    needs: build
+    if: inputs.publish
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Upload to the release
+        run: |
+          VERSION=$(tr -d '\r\n' < dist/VERSION); TAG="v$VERSION"
+          FILES=(); for f in dist/Motion-*; do [ -s "$f" ] && FILES+=("$f"); done
+          [ ${#FILES[@]} -gt 0 ] || { echo "::error::nothing to upload"; exit 1; }
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" "${FILES[@]}" --clobber
+          else
+            gh release create "$TAG" "${FILES[@]}" --title "Motion $VERSION" --notes "Motion $VERSION"
+          fi
+          printf 'Uploaded to %s:\n%s\n' "$TAG" "$(ls dist)" >> "$GITHUB_STEP_SUMMARY"
