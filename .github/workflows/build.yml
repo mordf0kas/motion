@@ -100,39 +100,11 @@ jobs:
         shell: pwsh
         run: |
           $v = "${{ steps.ver.outputs.v }}"
-          $iss = @"
-          #define V "$v"
-          [Setup]
-          AppId={{6D1B2E4C-8F3A-4C71-9E0D-DRELVAMOTION1}}
-          AppName=Motion
-          AppVersion={#V}
-          AppPublisher=Drelva
-          AppPublisherURL=https://mordf0kas.github.io/motion
-          DefaultDirName={autopf}\Drelva\Motion
-          DisableProgramGroupPage=yes
-          OutputDir=installer_out
-          OutputBaseFilename=Motion-Setup
-          Compression=lzma2
-          SolidCompression=yes
-          WizardStyle=modern
-          ArchitecturesInstallIn64BitMode=x64compatible
-          PrivilegesRequired=admin
-          [Components]
-          Name: "vst3"; Description: "VST3 plug-in"; Types: full compact custom; Flags: fixed
-          Name: "standalone"; Description: "Standalone app"; Types: full
-          [Files]
-          Source: "build\Motion_artefacts\Release\VST3\Motion.vst3\*"; DestDir: "{commoncf}\VST3\Motion.vst3"; Flags: ignoreversion recursesubdirs createallsubdirs; Components: vst3
-          Source: "build\Motion_artefacts\Release\Standalone\Motion.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: standalone
-          [Icons]
-          Name: "{autoprograms}\Motion"; Filename: "{app}\Motion.exe"; Components: standalone
-          [UninstallDelete]
-          Type: filesandordirs; Name: "{commoncf}\VST3\Motion.vst3"
-          "@
-          Set-Content -Path Motion.iss -Value ($iss -replace '(?m)^ {10}', '') -Encoding UTF8
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" Motion.iss
+          # installer/Motion.iss lives in the source repo; it writes ..\installer_out (repo root)
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "/DMyAppVersion=$v" "/DBuildDir=$PWD/build/Motion_artefacts/Release" installer\Motion.iss
           if ($LASTEXITCODE -ne 0) { exit 1 }
           New-Item -ItemType Directory -Force out | Out-Null
-          Copy-Item installer_out\Motion-Setup.exe "out\Motion-$v-Setup-Windows.exe"
+          Copy-Item "installer_out\Motion-v$v-Setup-Windows.exe" "out\Motion-$v-Setup-Windows.exe"
           Compress-Archive -Path build\Motion_artefacts\Release\VST3\Motion.vst3, build\Motion_artefacts\Release\Standalone\Motion.exe -DestinationPath "out\Motion-$v-Windows.zip"
           Set-Content -Path out\VERSION -Value $v -NoNewline
       - uses: actions/upload-artifact@v4
